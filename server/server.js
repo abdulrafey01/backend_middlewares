@@ -3,7 +3,8 @@ const cors = require('cors');
 const { urlCheck } = require('./middleware/urlCheck');
 const { checkSession } = require("./middleware/checkSession")
 const {storeUser} = require("./middleware/storeUser")
-var geoip = require('geoip-lite');
+const {tracertCommand} = require("./middleware/tracert")
+const {checkBrowser} = require("./middleware/checkBrowser")
 
 const app = express();
 app.use(express.json());
@@ -35,6 +36,15 @@ app.post('/signout', checkSession, (req, res) => {
     res.send({
         msg: `GoodBye ${userName}`
     })
+})
+
+
+app.get('/tracert', tracertCommand , (req, res) => {
+    res.send("Check Console To See Tracert Results")
+})
+
+app.get('/getbrowser',checkBrowser, (req, res) => {
+    res.send("Check Console To See Browser Info")
 })
 
 app.listen(4000, () => {
